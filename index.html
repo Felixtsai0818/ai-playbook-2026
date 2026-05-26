@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS BioteQ × AI Playbook 2026</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, "Segoe UI", "Noto Sans TC", sans-serif;
+      background: #070910;
+      color: #e8eaf0;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 80px;
+      opacity: 0;
+      transform: translateX(64px);
+      transition: opacity .42s ease, transform .42s ease;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+    }
+
+    .slide.exit {
+      opacity: 0;
+      transform: translateX(-64px);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 50% at 10% 15%, rgba(0, 185, 210, .11) 0%, transparent 60%), radial-gradient(ellipse 50% 55% at 90% 85%, rgba(110, 60, 220, .13) 0%, transparent 60%), radial-gradient(ellipse 35% 35% at 55% 45%, rgba(0, 110, 150, .06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .slide>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typography */
+    .grad {
+      background: linear-gradient(135deg, #00d4e8 0%, #7c6fff 50%, #e870c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grad-g {
+      background: linear-gradient(135deg, #00e5a0 0%, #00c4d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grad-w {
+      background: linear-gradient(135deg, #ffd060 0%, #ff8c50 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grad-p {
+      background: linear-gradient(135deg, #a89fff 0%, #e870c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .en {
+      display: block;
+      font-size: .62em;
+      letter-spacing: .02em;
+      color: rgba(255, 255, 255, .38);
+      font-style: italic;
+      margin-top: 4px;
+      -webkit-text-fill-color: rgba(255, 255, 255, .38);
+    }
+
+    .tag {
+      font-size: 14px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: #00d4e8;
+      margin-bottom: 12px;
+    }
+
+    .h1 {
+      font-size: 62px;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.5px;
+    }
+
+    .h2 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -.3px;
+    }
+
+    .sub {
+      font-size: 22px;
+      color: rgba(255, 255, 255, .42);
+      margin-top: 8px;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    /* Glass */
+    .glass {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+
+    .badge-c {
+      background: rgba(0, 212, 232, .15);
+      color: #00d4e8;
+      border: 1px solid rgba(0, 212, 232, .3);
+    }
+
+    .badge-p {
+      background: rgba(124, 111, 255, .15);
+      color: #a89fff;
+      border: 1px solid rgba(124, 111, 255, .3);
+    }
+
+    .badge-m {
+      background: rgba(232, 112, 192, .15);
+      color: #e870c0;
+      border: 1px solid rgba(232, 112, 192, .3);
+    }
+
+    .badge-g {
+      background: rgba(0, 229, 160, .15);
+      color: #00e5a0;
+      border: 1px solid rgba(0, 229, 160, .3);
+    }
+
+    .badge-w {
+      background: rgba(255, 208, 96, .15);
+      color: #ffd060;
+      border: 1px solid rgba(255, 208, 96, .3);
+    }
+
+    .badge-r {
+      background: rgba(255, 100, 80, .15);
+      color: #ff7060;
+      border: 1px solid rgba(255, 100, 80, .3);
+    }
+
+    /* Screenshot placeholder */
+    .ph {
+      border: 2px dashed rgba(255, 255, 255, .18);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, .02);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .ph-icon {
+      font-size: 32px;
+      opacity: .35;
+    }
+
+    .ph-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, .3);
+    }
+
+    .ph-file {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 13px;
+      color: #00d4e8;
+      opacity: .7;
+      background: rgba(0, 212, 232, .08);
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 212, 232, .2);
+    }
+
+    /* Nav */
+    .nav-wrap {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 100;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2);
+      cursor: pointer;
+      transition: all .25s;
+    }
+
+    .dot.on {
+      background: #00d4e8;
+      width: 22px;
+      border-radius: 4px;
+    }
+
+    .hint {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, .25);
+      z-index: 100;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00d4e8, #7c6fff, #e870c0);
+      transition: width .4s ease;
+      z-index: 100;
+    }
+
+    .counter {
+      position: fixed;
+      top: 18px;
+      right: 28px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, .28);
+      z-index: 100;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Section divider */
+    .sec-wrap {
+      text-align: center;
+    }
+
+    .sec-num {
+      font-size: 140px;
+      font-weight: 900;
+      line-height: 1;
+      opacity: .06;
+      letter-spacing: -4px;
+      margin-bottom: -50px;
+    }
+
+    .sec-title {
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .sec-sub {
+      font-size: 22px;
+      color: rgba(255, 255, 255, .4);
+      margin-top: 16px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* Layouts */
+    .col2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      width: 100%;
+      max-width: 1000px;
+      align-items: start;
+    }
+
+    .col3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    /* Card */
+    .card {
+      padding: 24px 26px;
+      border-radius: 16px;
+    }
+
+    .icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    /* Bar */
+    .bar {
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, .08);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    /* Flow */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    .flow-step {
+      flex: 1;
+      text-align: center;
+      padding: 18px 12px;
+      border-radius: 14px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .flow-arrow {
+      font-size: 22px;
+      color: rgba(255, 255, 255, .25);
+      flex-shrink: 0;
+      padding: 0 6px;
+    }
+
+    /* Case card */
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .case-card {
+      padding: 20px 24px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .case-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .case-num {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      opacity: .45;
+    }
+
+    .case-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .case-desc {
+      font-size: 16px;
+      color: rgba(255, 255, 255, .48);
+      line-height: 1.6;
+    }
+
+    .case-tools {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+      max-width: 980px;
+    }
+
+    .tl-card {
+      padding: 28px 24px;
+      border-radius: 18px;
+    }
+
+    .tl-day {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+
+    .tl-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tl-item {
+      display: flex;
+      gap: 12px;
+      font-size: 17px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, .72);
+    }
+
+    .tl-dot-wrap {
+      padding-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .tl-dot-inner {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Feature hero (single-feature Gemini slides) */
+    .feat-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .feat-icon {
+      font-size: 72px;
+      line-height: 1;
+    }
+
+    .feat-title {
+      font-size: 52px;
+      font-weight: 900;
+    }
+
+    .feat-desc {
+      font-size: 22px;
+      color: rgba(255, 255, 255, .6);
+      line-height: 1.6;
+      max-width: 640px;
+    }
+
+    .feat-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .feat-pill {
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="prog"></div>
+  <div class="counter" id="ctr">1 / 35</div>
+  <div class="deck" id="deck">
+
+    <!-- ═══ SLIDE 1 · COVER ═══ -->
+    <div class="slide active" id="s1">
+      <div
+        style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,232,.07) 0%,transparent 70%);top:-80px;left:-100px;pointer-events:none;z-index:0;">
+      </div>
+      <div
+        style="position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(124,111,255,.09) 0%,transparent 70%);bottom:-60px;right:-80px;pointer-events:none;z-index:0;">
+      </div>
+      <div style="text-align:center;">
+        <div
+          style="font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:#00d4e8;border:1px solid rgba(0,212,232,.3);display:inline-block;padding:6px 20px;border-radius:30px;margin-bottom:36px;">
+          AMS BioteQ · Internal Training 2026</div>
+        <div style="font-size:96px;font-weight:900;line-height:1.0;letter-spacing:-3px;margin-bottom:18px;"><span
+            class="grad">AI 工作術</span></div>
+        <div style="font-size:30px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:12px;">從聊天到自動化，你也可以做到</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.38);font-style:italic;margin-bottom:48px;">From chat to
+          automation — everyone can level up</div>
+        <div
+          style="display:flex;gap:28px;justify-content:center;font-size:16px;color:rgba(255,255,255,.38);align-items:center;">
+          <span>Felix Tsai 蔡儒億</span>
+          <span style="width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.2);"></span>
+          <span>Chief Business Officer</span>
+          <span style="width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.2);"></span>
+          <span>May 2026</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══ SLIDE 2 · FELIX DAILY AI WORKFLOW ═══ -->
+    <div class="slide" id="s2">
+      <div
+        style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(124,111,255,.08) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none;z-index:0;">
+      </div>
+      <div
+        style="width:100%;max-width:1000px;display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div
+            style="width:100%;aspect-ratio:3/4;border-radius:14px;overflow:hidden;border:2px solid rgba(0,212,232,.35);box-shadow:0 0 40px rgba(0,212,232,.14);flex-shrink:0;">
+            <img src="Felix%20photo.jpeg"
+              style="width:100%;height:100%;object-fit:contain;background:#0b1220;display:block;">
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:22px;font-weight:800;">Felix Tsai 蔡儒億</div>
+            <div style="font-size:15px;color:rgba(255,255,255,.42);margin-top:4px;">Chief Business Officer</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.3);margin-top:2px;">AMS BioteQ 元樟生技</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <div>
+            <div class="tag">我的日常 · My Daily Setup</div>
+            <div class="h2" style="margin-bottom:8px;">AI 已經是我每日工作的<span class="grad">標準配備</span><span class="en"
+                style="font-size:18px;">AI is no longer a tool — it is part of how I work every single day</span></div>
+          </div>
+          <div
+            style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 32px rgba(0,0,0,.4);">
+            <img src="%E5%B7%A5%E4%BD%9C%E6%A1%8CGemini%2BClaude%2BCLI.jpg"
+              style="width:100%;height:200px;object-fit:cover;object-position:center 30%;display:block;">
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <div class="badge badge-g" style="font-size:14px;">Gemini Advanced</div>
+            <div class="badge badge-c" style="font-size:14px;">Claude Cowork</div>
+            <div class="badge badge-m" style="font-size:14px;">Claude Code CLI</div>
+            <div class="badge badge-w" style="font-size:14px;">n8n 自動化</div>
+          </div>
+          <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.65;">
+            這不是在炫耀——是想讓你知道，這些工具現在已經足夠成熟，任何人都能上手。<br><em style="font-size:14px;">Not showing off — just proving these
+              tools are mature enough for everyone to use.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 2 · WHY NOW ═══ -->
+    <div class="slide" id="s3">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">01 · Context</div>
+        <div class="h1" style="margin-bottom:8px;">AI 可以讓你 Rock & Roll<br><span class="en" style="font-size:22px;">Not a
+            question of if — only how far behind.</span></div>
+        <div class="sub">AI 早就不是新工具，是每個人的新預設值。</div>
+      </div>
+      <div class="col3" style="margin-top:0;">
+        <div class="card glass" style="border-left:3px solid #00d4e8;">
+          <div style="font-size:36px;margin-bottom:14px;">📬</div>
+          <div style="font-size:20px;font-weight:700;margin-bottom:8px;">客戶 24 小時等你回<span class="en">Clients expect a
+              reply within 24 hrs</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.48);line-height:1.6;">海外客戶期望 24 小時內拿到第一版回覆。傳統手寫流程根本追不上。
+          </div>
+        </div>
+        <div class="card glass" style="border-left:3px solid #7c6fff;">
+          <div style="font-size:36px;margin-bottom:14px;">⚡</div>
+          <div style="font-size:20px;font-weight:700;margin-bottom:8px;">競品已經用 AI 提案<span class="en">Competitors are
+              pitching with AI</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.48);line-height:1.6;">歐美同業用 AI 產出技術白皮書，速度和密度都翻倍。我們在等什麼？
+          </div>
+        </div>
+        <div class="card glass" style="border-left:3px solid #e870c0;">
+          <div style="font-size:36px;margin-bottom:14px;">🚀</div>
+          <div style="font-size:20px;font-weight:700;margin-bottom:8px;">三條線同時衝<span class="en">Three product lines,
+              all-in simultaneously</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.48);line-height:1.6;">SeepPlug、Lumière、SIPSIP
+            同時推進。靠人力擴編？不現實。</div>
+        </div>
+      </div>
+      <div
+        style="margin-top:24px;padding:18px 28px;border-radius:14px;background:rgba(0,212,232,.08);border:1px solid rgba(0,212,232,.2);max-width:1000px;width:100%;font-size:18px;color:rgba(255,255,255,.65);">
+        今天不練，半年後同樣的工作要花 2 倍時間。<span style="color:#00d4e8;font-weight:700;">差距只會越來越大。</span>
+        <span class="en" style="font-size:15px;margin-top:4px;">Skip this today, spend twice the time in six months. The
+          gap only widens.</span>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 3 · TODAY'S GOALS ═══ -->
+    <div class="slide" id="s4">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">02 · Outcomes</div>
+        <div class="h1" style="margin-bottom:8px;">今天散場，你帶走這 3 樣東西<span class="en" style="font-size:22px;">Walk out with
+            these 3 things today</span></div>
+        <div class="sub">不用全學會，先讓這三件事在你腦子裡紮根。</div>
+      </div>
+      <div class="col3" style="margin-top:4px;">
+        <div class="card glass" style="padding:32px 28px;">
+          <div style="font-size:56px;font-weight:900;margin-bottom:18px;" class="grad">01</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:10px;">你會寫出像樣的 Prompt<span class="en">Write a Prompt
+              that actually works</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.45);line-height:1.65;">角色、背景、任務、限制、格式——五件套，產出直接翻三倍。</div>
+        </div>
+        <div class="card glass" style="padding:32px 28px;">
+          <div style="font-size:56px;font-weight:900;margin-bottom:18px;" class="grad-g">02</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:10px;">Gemini 從「會用」到「用得好」<span class="en">From using
+              Gemini to mastering it</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.45);line-height:1.65;">檔案上傳、Deep Research、Canvas、圖片影片音樂全開。
+          </div>
+        </div>
+        <div class="card glass" style="padding:32px 28px;">
+          <div style="font-size:56px;font-weight:900;margin-bottom:18px;" class="grad-w">03</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:10px;">看見 AI 放大個人產出的樣子<span class="en">See what
+              AI-amplified output looks like</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.45);line-height:1.65;">Felix 個人落地的 8 個自動化案例，其中 4 個今天就能複製。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 4 · AI MATURITY ═══ -->
+    <div class="slide" id="s5">
+      <div style="width:100%;max-width:1000px;text-align:center;margin-bottom:28px;">
+        <div class="tag">03 · Self-Assessment</div>
+        <div class="h1">你現在用 AI 用到幾成？<span class="en" style="font-size:22px;">Where are you on the AI maturity
+            scale?</span></div>
+      </div>
+      <div style="display:flex;gap:14px;width:100%;max-width:1000px;">
+        <div class="card glass" style="flex:1;text-align:center;padding:26px 16px;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;opacity:.45;margin-bottom:12px;">L1</div>
+          <div style="font-size:32px;margin-bottom:10px;">💬</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:6px;">只會聊天<span class="en"
+              style="font-size:13px;">Just chatting</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-bottom:14px;line-height:1.5;">問問題、查資料，一問一答</div>
+          <div style="font-size:30px;font-weight:900;" class="grad-w">60%</div>
+          <div class="bar">
+            <div class="bar-fill" style="width:60%;background:linear-gradient(90deg,#ffd060,#ff8c50);"></div>
+          </div>
+        </div>
+        <div class="card glass" style="flex:1;text-align:center;padding:26px 16px;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;opacity:.45;margin-bottom:12px;">L2</div>
+          <div style="font-size:32px;margin-bottom:10px;">📎</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:6px;">會丟檔案<span class="en"
+              style="font-size:13px;">Uploading files</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-bottom:14px;line-height:1.5;">PDF、Excel 上傳讓 AI 分析
+          </div>
+          <div style="font-size:30px;font-weight:900;" class="grad-g">20%</div>
+          <div class="bar">
+            <div class="bar-fill" style="width:20%;background:linear-gradient(90deg,#00e5a0,#00c4d4);"></div>
+          </div>
+        </div>
+        <div class="card glass"
+          style="flex:1;text-align:center;padding:26px 16px;border:1px solid rgba(0,212,232,.28);">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;opacity:.45;margin-bottom:12px;">L3 ← 今天目標
+          </div>
+          <div style="font-size:32px;margin-bottom:10px;">✍️</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:6px;">會寫 Prompt<span class="en"
+              style="font-size:13px;">Crafting prompts</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-bottom:14px;line-height:1.5;">結構化設計輸出內容</div>
+          <div style="font-size:30px;font-weight:900;" class="grad">12%</div>
+          <div class="bar">
+            <div class="bar-fill" style="width:12%;background:linear-gradient(90deg,#00d4e8,#7c6fff);"></div>
+          </div>
+        </div>
+        <div class="card glass" style="flex:1;text-align:center;padding:26px 16px;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;opacity:.45;margin-bottom:12px;">L4</div>
+          <div style="font-size:32px;margin-bottom:10px;">🤖</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:6px;">會建 Gem<span class="en"
+              style="font-size:13px;">Building Gems</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-bottom:14px;line-height:1.5;">工作流封裝成可重用模組</div>
+          <div style="font-size:30px;font-weight:900;" class="grad-p">5%</div>
+          <div class="bar">
+            <div class="bar-fill" style="width:5%;background:linear-gradient(90deg,#7c6fff,#e870c0);"></div>
+          </div>
+        </div>
+        <div class="card glass" style="flex:1;text-align:center;padding:26px 16px;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;opacity:.45;margin-bottom:12px;">L5</div>
+          <div style="font-size:32px;margin-bottom:10px;">⚙️</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:6px;">設計自動化<span class="en"
+              style="font-size:13px;">Full automation</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-bottom:14px;line-height:1.5;">串接 n8n / AppSheet /
+            API</div>
+          <div style="font-size:30px;font-weight:900;color:#e870c0;">3%</div>
+          <div class="bar">
+            <div class="bar-fill" style="width:3%;background:linear-gradient(90deg,#e870c0,#ff8c50);"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:22px;font-size:17px;color:rgba(255,255,255,.4);">今天目標：<span
+          style="color:#00d4e8;font-weight:700;">全員從 L1 → L2/L3</span> &nbsp;·&nbsp; <em>Today's goal: move everyone
+          from L1 to at least L2/L3</em></div>
+    </div>
+
+    <!-- ═══ SLIDE 5 · SECTION: PROMPT ═══ -->
+    <div class="slide" id="s6">
+      <div class="sec-wrap">
+        <div class="sec-num">01</div>
+        <div class="sec-title"><span class="grad">Prompt</span></div>
+        <div style="font-size:16px;color:rgba(255,255,255,.35);margin-top:8px;font-style:italic;">Part 1 of 6</div>
+        <div class="sec-sub">工具三個月換一次，Prompt 的邏輯永遠有效。<br><em style="font-size:16px;">Tools change every quarter. Prompt
+            logic stays forever.</em></div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 6 · PROMPT ANATOMY ═══ -->
+    <div class="slide" id="s7">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Prompt · 五件套解剖</div>
+        <div class="h1" style="margin-bottom:8px;">會寫 Prompt，產出直接翻三倍<span class="en" style="font-size:22px;">Structured
+            prompts = 3× better output (MIT / Microsoft, 2024)</span></div>
+        <div class="sub">記住這五個元素，就掌握 80% 的 Prompt 技巧。</div>
+      </div>
+      <div class="col2" style="margin-top:0;">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div
+              style="width:42px;height:42px;border-radius:11px;background:rgba(0,212,232,.2);color:#00d4e8;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">
+              1</div>
+            <div>
+              <div style="font-size:15px;color:rgba(255,255,255,.4);">Role 角色</div>
+              <div style="font-size:20px;font-weight:600;">「你是 SIPSIP 產品專員」</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div
+              style="width:42px;height:42px;border-radius:11px;background:rgba(124,111,255,.2);color:#a89fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">
+              2</div>
+            <div>
+              <div style="font-size:15px;color:rgba(255,255,255,.4);">Context 背景</div>
+              <div style="font-size:20px;font-weight:600;">「我們正在申請美國 510(k)」</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div
+              style="width:42px;height:42px;border-radius:11px;background:rgba(232,112,192,.2);color:#e870c0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">
+              3</div>
+            <div>
+              <div style="font-size:15px;color:rgba(255,255,255,.4);">Task 任務</div>
+              <div style="font-size:20px;font-weight:600;">「整理我方 vs 兩個競品比較表」</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div
+              style="width:42px;height:42px;border-radius:11px;background:rgba(255,208,96,.2);color:#ffd060;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">
+              4</div>
+            <div>
+              <div style="font-size:15px;color:rgba(255,255,255,.4);">Constraints 限制</div>
+              <div style="font-size:20px;font-weight:600;">「繁體中文、不超過 300 字」</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div
+              style="width:42px;height:42px;border-radius:11px;background:rgba(0,229,160,.2);color:#00e5a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;">
+              5</div>
+            <div>
+              <div style="font-size:15px;color:rgba(255,255,255,.4);">Format 格式</div>
+              <div style="font-size:20px;font-weight:600;">「輸出 Markdown 表格」</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass" style="padding:28px;">
+          <div
+            style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px;">
+            組合起來長這樣 · Full example</div>
+          <div
+            style="font-family:'SF Mono','Fira Code',monospace;font-size:16px;line-height:2;color:rgba(255,255,255,.72);">
+            <span style="color:#00d4e8;">你是 SIPSIP 產品專員。</span><br>
+            <span style="color:#a89fff;">我們正準備美國 510(k) 申請。</span><br>
+            <span style="color:#e870c0;">請整理一份我方 vs 兩個競品特徵比較，</span><br>
+            <span style="color:#e870c0;">重點放在材質、吸收力、適應症。</span><br>
+            <span style="color:#ffd060;">繁體中文，不超過 300 字，</span><br>
+            <span style="color:#00e5a0;">輸出 Markdown 表格。</span>
+          </div>
+          <div
+            style="margin-top:18px;padding:12px 16px;border-radius:10px;background:rgba(255,100,80,.07);border:1px solid rgba(255,100,80,.18);font-size:15px;color:rgba(255,255,255,.5);">
+            ❌ 壞的 Prompt：「幫我寫一封給客戶的信」<br>
+            <em style="font-size:14px;">Bad: "Write me a client email." — AI has no idea what you actually need.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 7 · DEPT EXAMPLES ═══ -->
+    <div class="slide" id="s8">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Prompt · 部門實戰</div>
+        <div class="h1" style="margin-bottom:8px;">你的工作，直接套進去<span class="en" style="font-size:22px;">Real prompts for
+            your real job</span></div>
+        <div class="sub">三條產品線，各有一個你今天就能用的範本。</div>
+      </div>
+      <div class="col3" style="margin-top:4px;">
+        <div class="card glass" style="border-top:3px solid #00e5a0;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div class="icon-box" style="background:rgba(0,229,160,.15);">🌿</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;">SeepPlug 業務</div>
+              <div style="font-size:14px;color:rgba(255,255,255,.4);">Sales · Agri-media</div>
+            </div>
+          </div>
+          <div style="font-size:18px;font-weight:600;margin-bottom:12px;">客戶英文介紹信<span class="en">First-touch intro
+              email</span></div>
+          <div
+            style="font-family:monospace;font-size:15px;padding:14px;border-radius:10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);line-height:1.7;">
+            你是 SeepPlug 海外業務。對象：中東椰棗農場主。寫 200 字英文介紹信，強調耐熱性、節水 30%、本地實驗合作機會。</div>
+        </div>
+        <div class="card glass" style="border-top:3px solid #e870c0;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div class="icon-box" style="background:rgba(232,112,192,.15);">✨</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;">Lumière 行銷</div>
+              <div style="font-size:14px;color:rgba(255,255,255,.4);">Marketing · Skincare</div>
+            </div>
+          </div>
+          <div style="font-size:18px;font-weight:600;margin-bottom:12px;">IG 貼文一稿三版<span class="en">3 IG captions in one
+              shot</span></div>
+          <div
+            style="font-family:monospace;font-size:15px;padding:14px;border-radius:10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);line-height:1.7;">
+            你是 Lumière 社群編輯，語調溫柔有自信。新品玻尿酸面膜，三版文案：知識型、情感型、促購型，各 150 字含 Hashtag。</div>
+        </div>
+        <div class="card glass" style="border-top:3px solid #7c6fff;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div class="icon-box" style="background:rgba(124,111,255,.15);">🩹</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;">SIPSIP 產品</div>
+              <div style="font-size:14px;color:rgba(255,255,255,.4);">Regulatory · Wound care</div>
+            </div>
+          </div>
+          <div style="font-size:18px;font-weight:600;margin-bottom:12px;">510(k) 差異比對<span class="en">Predicate device
+              comparison</span></div>
+          <div
+            style="font-family:monospace;font-size:15px;padding:14px;border-radius:10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);line-height:1.7;">
+            你是 SIPSIP 產品專員，準備 510(k)。依預測裝置 K123456，整理我方差異與相同點對照表，Markdown，限 300 字。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 8 · SECTION: GEMINI ═══ -->
+    <div class="slide" id="s9">
+      <div class="sec-wrap">
+        <div class="sec-num">02</div>
+        <div class="sec-title"><span style="color:#4285f4;">G</span><span style="color:#ea4335;">e</span><span
+            style="color:#fbbc05;">m</span><span style="color:#34a853;">i</span><span
+            style="color:#4285f4;">n</span><span style="color:#ea4335;">i</span></div>
+        <div style="font-size:16px;color:rgba(255,255,255,.35);margin-top:8px;font-style:italic;">Part 2 of 6</div>
+        <div class="sec-sub">你每天都在用，但 80% 的功能還沒打開。<br><em style="font-size:16px;">You use it daily — but 80% of its
+            power is untapped.</em></div>
+      </div>
+    </div>
+
+
+    <!-- ═══ SLIDE 9 · GEMINI FEATURE MAP ═══ -->
+    <div class="slide" id="s10">
+      <div style="width:100%;max-width:1000px;text-align:center;margin-bottom:28px;">
+        <div class="tag">Gemini · 全功能地圖</div>
+        <div class="h1">這些功能，你打開用了嗎？<span class="en" style="font-size:22px;">All the Gemini features most people haven't
+            tried yet</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:1000px;">
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">📎</div>
+          <div style="font-size:18px;font-weight:700;color:#00d4e8;">檔案上傳</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">PDF / Excel / 圖片</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">🔍</div>
+          <div style="font-size:18px;font-weight:700;color:#a89fff;">Deep Research</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">自動聯網蒐集</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">📝</div>
+          <div style="font-size:18px;font-weight:700;color:#e870c0;">Canvas</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">側欄即時編輯</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">🎙️</div>
+          <div style="font-size:18px;font-weight:700;color:#ffd060;">Audio Overview</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">文件變 Podcast</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">📧</div>
+          <div style="font-size:18px;font-weight:700;color:#00e5a0;">Gmail AI</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">草稿 / 摘要</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">🎥</div>
+          <div style="font-size:18px;font-weight:700;color:#00d4e8;">Meet AI</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">即時筆記</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;">
+          <div style="font-size:36px;margin-bottom:10px;">📄</div>
+          <div style="font-size:18px;font-weight:700;color:#a89fff;">Docs + Sheets</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">AI 內建編輯</div>
+        </div>
+        <div class="card glass" style="text-align:center;padding:20px 14px;border:1px solid rgba(255,208,96,.2);">
+          <div style="font-size:36px;margin-bottom:10px;">🎨🎬🎵📚</div>
+          <div style="font-size:18px;font-weight:700;" class="grad-w">生成圖影音</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">Imagen · Veo · MusicFX</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 10 · FILE UPLOAD ═══ -->
+    <div class="slide" id="s11">
+      <div class="feat-hero">
+        <div class="feat-icon">📎</div>
+        <div class="feat-title"><span class="grad">檔案上傳</span> <span
+            style="font-size:32px;font-weight:400;color:rgba(255,255,255,.4);">File Upload</span></div>
+        <div class="feat-desc">把 PDF、Excel、圖片直接丟進去——最多 10 個，AI 一口氣幫你分析完，出結果。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">Drop up to 10 files at once — Gemini
+          reads them all and answers your questions.</div>
+        <div class="feat-pills">
+          <div class="feat-pill"
+            style="background:rgba(0,212,232,.12);border:1px solid rgba(0,212,232,.25);color:#00d4e8;">📄 PDF 論文 50 篇 →
+            立刻問答</div>
+          <div class="feat-pill"
+            style="background:rgba(0,229,160,.12);border:1px solid rgba(0,229,160,.25);color:#00e5a0;">📊 Excel 報表 → AI
+            解讀規律</div>
+          <div class="feat-pill"
+            style="background:rgba(232,112,192,.12);border:1px solid rgba(232,112,192,.25);color:#e870c0;">🖼️ 產品圖片 →
+            競品對比分析</div>
+        </div>
+        <div
+          style="margin-top:16px;padding:16px 28px;border-radius:14px;background:rgba(255,208,96,.08);border:1px solid rgba(255,208,96,.2);font-size:17px;color:rgba(255,255,255,.6);max-width:640px;text-align:center;">
+          💡 SIPSIP 產品同仁試試：把 50 篇傷口敷料論文一次丟進去，直接問「水膠體 vs 泡棉吸收力比較」
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 11 · DEEP RESEARCH ═══ -->
+    <div class="slide" id="s12">
+      <div class="feat-hero">
+        <div class="feat-icon">🔍</div>
+        <div class="feat-title"><span class="grad-p">Deep Research</span></div>
+        <div class="feat-desc">AI 自動上網蒐集資料，5–10 分鐘出一份完整報告，每個結論都附原始來源連結。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">AI autonomously searches the web and
+          delivers a full sourced report in 5–10 min.</div>
+        <div class="col2" style="max-width:800px;margin-top:12px;">
+          <div
+            style="padding:20px 24px;border-radius:14px;background:rgba(255,100,80,.08);border:1px solid rgba(255,100,80,.2);text-align:center;">
+            <div style="font-size:18px;font-weight:700;color:#ff7060;margin-bottom:8px;">❌ 傳統人工</div>
+            <div style="font-size:36px;font-weight:900;margin-bottom:6px;" class="grad-w">半天</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.45);">Google → 一篇一篇讀 → 整理成文</div>
+          </div>
+          <div
+            style="padding:20px 24px;border-radius:14px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.25);text-align:center;">
+            <div style="font-size:18px;font-weight:700;color:#00e5a0;margin-bottom:8px;">✅ Deep Research</div>
+            <div style="font-size:36px;font-weight:900;margin-bottom:6px;" class="grad-g">5 分鐘</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.45);">輸入問題 → 等結果 → 看報告附來源</div>
+          </div>
+        </div>
+        <div
+          style="padding:14px 24px;border-radius:12px;background:rgba(124,111,255,.08);border:1px solid rgba(124,111,255,.2);font-size:17px;color:rgba(255,255,255,.6);max-width:700px;text-align:center;">
+          試試：「泰國蝴蝶蘭市場規模、主要通路、進口關稅」→ 直接拿報告去見客戶
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 12 · CANVAS ═══ -->
+    <div class="slide" id="s13">
+      <div class="feat-hero">
+        <div class="feat-icon">📝</div>
+        <div class="feat-title"><span class="grad-p">Canvas</span> <span
+            style="font-size:32px;font-weight:400;color:rgba(255,255,255,.4);">Inline Editor</span></div>
+        <div class="feat-desc">右側開一個即時編輯區，一邊跟 Gemini 對話，一邊直接在文件裡改——不用切換視窗。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">Chat on the left, edit the doc on the
+          right — changes happen inline, instantly.</div>
+        <div class="feat-pills">
+          <div class="feat-pill"
+            style="background:rgba(232,112,192,.12);border:1px solid rgba(232,112,192,.25);color:#e870c0;">✍️ 邊對話邊改文章
+          </div>
+          <div class="feat-pill"
+            style="background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.25);color:#a89fff;">🔄 版本對比即時看
+          </div>
+          <div class="feat-pill"
+            style="background:rgba(0,212,232,.12);border:1px solid rgba(0,212,232,.25);color:#00d4e8;">📑 長文件局部重寫</div>
+        </div>
+        <div
+          style="padding:14px 24px;border-radius:12px;background:rgba(232,112,192,.08);border:1px solid rgba(232,112,192,.2);font-size:17px;color:rgba(255,255,255,.6);max-width:700px;text-align:center;">
+          Lumière 行銷同仁試試：把 IG 文案草稿丟進去，叫它「改成更有情感、縮到 100 字」，在 Canvas 裡一秒見效果
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 13 · AUDIO OVERVIEW ═══ -->
+    <div class="slide" id="s14">
+      <div class="feat-hero">
+        <div class="feat-icon">🎙️</div>
+        <div class="feat-title"><span class="grad-w">Audio Overview</span></div>
+        <div class="feat-desc">任何文件 → 一鍵生成 15–20 分鐘雙人對談 Podcast。通勤路上，把一份報告聽完。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">Any document → a 20-min AI podcast.
+          Learn on your commute, not at your desk.</div>
+        <div style="display:flex;gap:20px;margin-top:16px;max-width:800px;">
+          <div class="card glass" style="flex:1;text-align:center;padding:24px;">
+            <div style="font-size:32px;margin-bottom:12px;">📄</div>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:#ffd060;">你上傳</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.48);">任何 PDF、報告、Docs 文件</div>
+          </div>
+          <div style="display:flex;align-items:center;font-size:32px;color:rgba(255,255,255,.25);">→</div>
+          <div class="card glass" style="flex:1;text-align:center;padding:24px;">
+            <div style="font-size:32px;margin-bottom:12px;">🎙️</div>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:#ffd060;">Gemini 生成</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.48);">雙人對談式 Podcast，AI 主動解析重點</div>
+          </div>
+          <div style="display:flex;align-items:center;font-size:32px;color:rgba(255,255,255,.25);">→</div>
+          <div class="card glass" style="flex:1;text-align:center;padding:24px;">
+            <div style="font-size:32px;margin-bottom:12px;">🎧</div>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:#ffd060;">你邊走邊學</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.48);">通勤 20 分鐘 = 讀完一份法規文件</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 14 · GMAIL × GEMINI ═══ -->
+    <div class="slide" id="s15">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Gemini in Gmail</div>
+        <div class="h1" style="margin-bottom:8px;">📧 Gmail 右側那個星星，你點了嗎？<span class="en" style="font-size:22px;">The AI
+            button in Gmail — most people have never clicked it</span></div>
+        <div class="sub">打開就是 AI，不用另開分頁。</div>
+      </div>
+      <div class="col2" style="margin-top:4px;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:28px;flex-shrink:0;">✍️</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;margin-bottom:6px;">智慧草稿</div>
+              <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.6;">描述你想說什麼，Gemini 直接出完整信件，你只需確認語氣後送出。
+              </div>
+            </div>
+          </div>
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:28px;flex-shrink:0;">📋</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;margin-bottom:6px;">長信一鍵摘要</div>
+              <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.6;">5 頁的客訴郵件 → 30 秒看完重點，不用從頭讀到尾。</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:28px;flex-shrink:0;">🌏</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;margin-bottom:6px;">英文客訴 → 中文草稿</div>
+              <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.6;">收到外國客戶抱怨信，直接請 Gemini 翻譯並出回覆初稿。
+              </div>
+            </div>
+          </div>
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:28px;flex-shrink:0;">🔍</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;margin-bottom:6px;">追蹤多條 Thread 決議</div>
+              <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.6;">問：「這個 Thread 最後決定怎麼做？」Gemini
+                幫你翻遍對話記錄。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 15 · MEET × GEMINI ═══ -->
+    <div class="slide" id="s16">
+      <div class="feat-hero">
+        <div class="feat-icon">🎥</div>
+        <div class="feat-title"><span style="color:#34a853;">Meet</span> <span
+            style="color:rgba(255,255,255,.4);font-size:32px;font-weight:400;">×</span> <span
+            style="color:#4285f4;">Gemini</span></div>
+        <div class="feat-desc">開會前按一下「Take notes with Gemini」，從此不再有人說「我不記得那次決定什麼了」。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">One click before the meeting. Notes +
+          action items delivered automatically after.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:860px;margin-top:8px;">
+          <div class="card glass" style="text-align:center;padding:24px 18px;">
+            <div style="font-size:36px;margin-bottom:12px;">🖱️</div>
+            <div style="font-size:18px;font-weight:700;color:#34a853;margin-bottom:8px;">開會前</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.5);">按「Take notes」<br>一個動作搞定</div>
+          </div>
+          <div class="card glass" style="text-align:center;padding:24px 18px;">
+            <div style="font-size:36px;margin-bottom:12px;">📝</div>
+            <div style="font-size:18px;font-weight:700;color:#4285f4;margin-bottom:8px;">即時記錄</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.5);">AI 自動抓決議<br>Action Items 含負責人</div>
+          </div>
+          <div class="card glass" style="text-align:center;padding:24px 18px;">
+            <div style="font-size:36px;margin-bottom:12px;">📨</div>
+            <div style="font-size:18px;font-weight:700;color:#ea4335;margin-bottom:8px;">會後自動寄送</div>
+            <div style="font-size:16px;color:rgba(255,255,255,.5);">摘要寄給所有出席者<br>缺席者問「我錯過什麼？」</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 16 · DOCS + SHEETS × GEMINI ═══ -->
+    <div class="slide" id="s17">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Gemini in Docs + Sheets</div>
+        <div class="h1" style="margin-bottom:8px;">文件和試算表裡的 AI，你用了嗎？<span class="en" style="font-size:22px;">AI is
+            already inside every doc and spreadsheet you open</span></div>
+        <div class="sub">不用另開 Gemini，直接在文件裡叫它工作。</div>
+      </div>
+      <div class="col2" style="margin-top:4px;">
+        <div class="card glass" style="padding:28px;">
+          <div style="font-size:32px;margin-bottom:14px;">📄</div>
+          <div style="font-size:24px;font-weight:800;color:#a89fff;margin-bottom:16px;">Google Docs</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#a89fff;">✦</span>大綱一鍵展開初稿
+            </div>
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#a89fff;">✦</span>改語氣（正式 ↔ 輕鬆）
+            </div>
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#a89fff;">✦</span>縮短或擴寫任意段落
+            </div>
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#a89fff;">✦</span>AI 生成示意圖插入文件
+            </div>
+          </div>
+        </div>
+        <div class="card glass" style="padding:28px;">
+          <div style="font-size:32px;margin-bottom:14px;">📊</div>
+          <div style="font-size:24px;font-weight:800;color:#00e5a0;margin-bottom:16px;">Google Sheets</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#00e5a0;">✦</span>混亂名單 → 一鍵分欄整理
+            </div>
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#00e5a0;">✦</span>用中文描述 → AI 幫你寫公式
+            </div>
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#00e5a0;">✦</span>Smart Fill 自動補完資料
+            </div>
+            <div style="display:flex;gap:12px;font-size:18px;color:rgba(255,255,255,.65);">
+              <span style="color:#00e5a0;">✦</span>選資料 → 找出規律洞察
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="margin-top:18px;padding:14px 24px;border-radius:12px;background:rgba(255,208,96,.08);border:1px solid rgba(255,208,96,.2);max-width:1000px;width:100%;font-size:16px;color:rgba(255,255,255,.55);">
+        ⚠️ 資料安全紅線：能寫在公司 Email 標題的，可以丟給 Workspace Gemini；不能的，就不行。<em style="font-size:14px;"> / Don't feed AI anything
+          you wouldn't put in a company email subject line.</em>
+      </div>
+    </div>
+
+
+    <!-- ═══ SLIDE 17 · IMAGEN 生成圖片 ═══ -->
+    <div class="slide" id="s18">
+      <div class="feat-hero">
+        <div class="feat-icon">🎨</div>
+        <div class="feat-title"><span class="grad-w">AI 生成圖片</span></div>
+        <div style="font-size:26px;color:rgba(255,255,255,.45);font-weight:400;">Imagen · gemini.google.com → Image
+          generation</div>
+        <div class="feat-desc">描述你想要的畫面，Gemini 用 Imagen 幫你生成出來——不需要任何設計技能。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">Describe what you want to see —
+          Imagen generates it. No design skills needed.</div>
+        <div class="feat-pills">
+          <div class="feat-pill"
+            style="background:rgba(255,208,96,.12);border:1px solid rgba(255,208,96,.25);color:#ffd060;">🌿 SeepPlug
+            農場場景圖</div>
+          <div class="feat-pill"
+            style="background:rgba(232,112,192,.12);border:1px solid rgba(232,112,192,.25);color:#e870c0;">✨ Lumière
+            產品情境照</div>
+          <div class="feat-pill"
+            style="background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.25);color:#a89fff;">📊 簡報視覺化插圖
+          </div>
+        </div>
+        <div
+          style="padding:14px 28px;border-radius:12px;background:rgba(255,208,96,.08);border:1px solid rgba(255,208,96,.2);font-size:17px;color:rgba(255,255,255,.6);max-width:680px;text-align:center;">
+          試試：「白色蝴蝶蘭溫室，科技感滴灌系統，清晨光線，產品攝影風格」
+          <div
+            style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:28px;width:100%;max-width:1060px;">
+            <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05);">
+              <img src="SeepPlug%20%E7%9A%AE%E5%8D%A1%E4%B8%98.png"
+                style="width:100%;height:130px;object-fit:cover;display:block;">
+              <div style="padding:8px;font-size:13px;color:rgba(255,255,255,.6);text-align:center;">SeepPlug × 皮卡丘</div>
+            </div>
+            <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05);">
+              <img src="SeepPlug%20%E7%9A%AE%E5%85%8B%E6%95%8F.png"
+                style="width:100%;height:130px;object-fit:cover;display:block;">
+              <div style="padding:8px;font-size:13px;color:rgba(255,255,255,.6);text-align:center;">SeepPlug × 皮克敏</div>
+            </div>
+            <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05);">
+              <img src="Lumi%20mask%20model.png"
+                style="width:100%;height:130px;object-fit:cover;display:block;">
+              <div style="padding:8px;font-size:13px;color:rgba(255,255,255,.6);text-align:center;">Lumière d'Art 面膜模特
+              </div>
+            </div>
+            <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05);">
+              <img src="%E5%85%83%E6%B0%A3%E9%A3%B2%E8%88%87007.jpeg"
+                style="width:100%;height:130px;object-fit:cover;display:block;">
+              <div style="padding:8px;font-size:13px;color:rgba(255,255,255,.6);text-align:center;">元氣飲 × 007 風格</div>
+            </div>
+            <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05);">
+              <img src="Lumi%20mask%20model%20%282%29.png"
+                style="width:100%;height:130px;object-fit:cover;display:block;">
+              <div style="padding:8px;font-size:13px;color:rgba(255,255,255,.6);text-align:center;">Lumière d'Art 面膜模特 ②
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 18 · VEO 生成影片 ═══ -->
+    <div class="slide" id="s19">
+      <div class="feat-hero">
+        <div class="feat-icon">🎬</div>
+        <div class="feat-title"><span class="grad">AI 生成影片</span></div>
+        <div style="font-size:26px;color:rgba(255,255,255,.45);font-weight:400;">Veo · Google Labs VideoFX</div>
+        <div class="feat-desc">輸入一段文字描述，Veo 幫你生成幾秒鐘的影片片段。社群素材、產品展示，不用找攝影師。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">Text prompt → short video clip.
+          Social content, product demos — no camera crew needed.</div>
+        <div class="col2" style="max-width:800px;margin-top:12px;">
+          <div class="card glass" style="padding:22px;">
+            <div style="font-size:22px;font-weight:700;color:#00d4e8;margin-bottom:10px;">現在可以做什麼</div>
+            <div style="font-size:17px;color:rgba(255,255,255,.55);line-height:1.7;">
+              · 產品 3D 展示短片<br>
+              · 社群廣告影片素材<br>
+              · 說明性動態圖解
+            </div>
+          </div>
+          <div class="card glass" style="padding:22px;">
+            <div style="font-size:22px;font-weight:700;color:#7c6fff;margin-bottom:10px;">進入方式</div>
+            <div style="font-size:17px;color:rgba(255,255,255,.55);line-height:1.7;">
+              labs.google → VideoFX<br>
+              或 Gemini Advanced 側欄<br>
+              <span style="color:#a89fff;font-size:15px;">（部份功能需 Gemini Advanced）</span>
+            </div>
+          </div>
+        </div>
+        <div
+          style="margin-top:18px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 8px 32px rgba(0,0,0,.4);max-width:640px;width:100%;">
+          <video controls muted loop playsinline
+            style="width:100%;display:block;max-height:260px;object-fit:contain;background:#000;">
+            <source src="%E5%85%83%E6%B0%A3%E9%A3%B2%E8%A9%A6%E9%A3%B2.mp4" type="video/mp4">
+          </video>
+          <div style="padding:10px 14px;font-size:14px;color:rgba(255,255,255,.35);text-align:center;">元氣飲試飲 · AI 生成影片示範
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 19 · MUSICFX 生成音樂 ═══ -->
+    <div class="slide" id="s20">
+      <div class="feat-hero">
+        <div class="feat-icon">🎵</div>
+        <div class="feat-title"><span class="grad-g">AI 生成音樂</span></div>
+        <div style="font-size:26px;color:rgba(255,255,255,.45);font-weight:400;">MusicFX ·
+          labs.google/experiments/music-fx</div>
+        <div class="feat-desc">描述音樂風格和情境，MusicFX 幫你生成一段背景音樂。簡報、展覽、影片配樂，不用版權費。</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.35);font-style:italic;">Describe a mood → get royalty-free
+          background music generated in seconds.</div>
+        <div class="feat-pills">
+          <div class="feat-pill"
+            style="background:rgba(0,229,160,.12);border:1px solid rgba(0,229,160,.25);color:#00e5a0;">🌿 農業展覽暖場音樂</div>
+          <div class="feat-pill"
+            style="background:rgba(232,112,192,.12);border:1px solid rgba(232,112,192,.25);color:#e870c0;">✨ 面膜品牌廣告配樂
+          </div>
+          <div class="feat-pill"
+            style="background:rgba(0,212,232,.12);border:1px solid rgba(0,212,232,.25);color:#00d4e8;">🎙️ Podcast 片頭音樂
+          </div>
+        </div>
+        <div
+          style="padding:14px 28px;border-radius:12px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.2);font-size:17px;color:rgba(255,255,255,.6);max-width:680px;text-align:center;">
+          試試：「輕鬆科技感、鋼琴加電子音、適合產品發表簡報的背景音樂，60 秒」
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 20 · AI 創意工坊 / 兒童繪本 ═══ -->
+    <div class="slide" id="s21">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Gemini · AI 創意工坊</div>
+        <div class="h1" style="margin-bottom:8px;">📚 兒童繪本、故事書，Gemini 一個人全包<span class="en"
+            style="font-size:20px;">Kids' picture books, stories — Gemini does it all alone</span></div>
+        <div class="sub">不只是文字，是「圖文整合的完整創作」——從腳本到插圖，10 分鐘出一本。</div>
+      </div>
+      <div class="col2" style="margin-top:4px;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card glass" style="padding:24px;">
+            <div style="font-size:22px;font-weight:800;color:#ffd060;margin-bottom:12px;">怎麼做</div>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:18px;color:rgba(255,255,255,.65);">
+              <div><span style="color:#00d4e8;font-weight:700;">Step 1 ·</span> 用 Gemini 寫繪本腳本（主角、情節、每頁文字）</div>
+              <div><span style="color:#a89fff;font-weight:700;">Step 2 ·</span> 叫 Imagen 根據每頁文字生成對應插圖</div>
+              <div><span style="color:#00e5a0;font-weight:700;">Step 3 ·</span> Canvas 整合文字＋圖片，排版完成</div>
+            </div>
+          </div>
+          <div class="card glass" style="padding:24px;border:1px solid rgba(255,208,96,.2);">
+            <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.7;">
+              💡 一個品牌故事繪本，可以當作送給大客戶的禮物、展覽手冊的創意版，或者你家小孩的生日禮物。
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div
+            style="border-radius:14px;overflow:hidden;border:1px solid rgba(0,229,160,.3);box-shadow:0 8px 32px rgba(0,0,0,.4);flex:1;">
+            <img src="SeepPlug%20%E7%AB%A5%E8%A9%B1%E7%B9%AA%E6%9C%AC.jpeg"
+              style="width:100%;height:100%;object-fit:cover;display:block;max-height:360px;">
+          </div>
+          <div
+            style="padding:12px 16px;border-radius:10px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.2);font-size:15px;color:rgba(255,255,255,.6);text-align:center;">
+            🌿 SeepPlug 童話繪本 · Gemini + Imagen 生成 · 10 分鐘完成
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 21 · RFQ WORKFLOW ═══ -->
+    <div class="slide" id="s22">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Gemini · 業務場景實戰</div>
+        <div class="h1" style="margin-bottom:8px;">一封 RFQ，60 分鐘 → 15 分鐘<span class="en" style="font-size:22px;">RFQ
+            reply: 60 min → 15 min</span></div>
+        <div class="sub">流程沒變，但 AI 幫你跑掉最耗時的那段。</div>
+      </div>
+      <div class="flow" style="max-width:1000px;width:100%;margin:16px 0;">
+        <div class="flow-step glass">
+          <div style="font-size:28px;margin-bottom:8px;">📩</div>
+          <div style="font-size:18px;font-weight:700;">客戶 RFQ<span class="en" style="font-size:14px;">Inbound RFQ</span>
+          </div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-top:6px;">全文丟給 Gemini</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step glass">
+          <div style="font-size:28px;margin-bottom:8px;">🔍</div>
+          <div style="font-size:18px;font-weight:700;">AI 摘要抽欄位<span class="en" style="font-size:14px;">AI extracts
+              fields</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-top:6px;">規格、數量、交期、地區</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step glass">
+          <div style="font-size:28px;margin-bottom:8px;">✍️</div>
+          <div style="font-size:18px;font-weight:700;">出第一版回覆<span class="en" style="font-size:14px;">First draft
+              reply</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-top:6px;">含建議方案＋風險旗標</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step glass">
+          <div style="font-size:28px;margin-bottom:8px;">🧑‍💼</div>
+          <div style="font-size:18px;font-weight:700;">人類補最後一哩<span class="en" style="font-size:14px;">Human adds the
+              soul</span></div>
+          <div style="font-size:15px;color:rgba(255,255,255,.4);margin-top:6px;">價格確認、人情味、發送</div>
+        </div>
+      </div>
+      <div class="col2" style="max-width:1000px;gap:16px;">
+        <div
+          style="padding:20px 24px;border-radius:14px;background:rgba(255,100,80,.08);border:1px solid rgba(255,100,80,.2);">
+          <div style="font-size:16px;font-weight:700;color:#ff7060;margin-bottom:8px;">❌ 沒有 AI</div>
+          <div style="font-size:32px;font-weight:900;margin-bottom:6px;" class="grad-w">60 分鐘</div>
+          <div style="font-size:17px;color:rgba(255,255,255,.45);">讀信 → 查規格 → 草擬 → 修飾 → 發送，每一步都靠人跑</div>
+        </div>
+        <div
+          style="padding:20px 24px;border-radius:14px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.25);">
+          <div style="font-size:16px;font-weight:700;color:#00e5a0;margin-bottom:8px;">✅ 有 Gemini</div>
+          <div style="font-size:32px;font-weight:900;margin-bottom:6px;" class="grad-g">15 分鐘</div>
+          <div style="font-size:17px;color:rgba(255,255,255,.45);">AI 出初稿 → 人類補上價格、溫度與判斷，其他全自動</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══ SLIDE 23 · NOTEBOOKLM ADVANCED ═══ -->
+    <div class="slide" id="s23">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">NotebookLM · 進階功能</div>
+        <div class="h1" style="margin-bottom:8px;">NotebookLM 不只是問答<span class="en" style="font-size:20px;">NotebookLM
+            does way more than just Q&A</span></div>
+        <div class="sub">一份資料，可以生成簡報、Podcast、心智圖——風格全部一致。</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:1000px;margin-top:0;">
+        <!-- Left: feature list -->
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;padding:20px 22px;">
+            <div style="font-size:32px;flex-shrink:0;">🎨</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;color:#00d4e8;margin-bottom:6px;">YAML 生成一致風格簡報</div>
+              <div style="font-size:16px;color:rgba(255,255,255,.5);line-height:1.6;">用 YAML
+                描述版面規格（顏色、字型、佈局），讓所有頁面風格統一，不再每頁手調。</div>
+            </div>
+          </div>
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;padding:20px 22px;">
+            <div style="font-size:32px;flex-shrink:0;">🎙️</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;color:#ffd060;margin-bottom:6px;">一鍵生成 Podcast</div>
+              <div style="font-size:16px;color:rgba(255,255,255,.5);line-height:1.6;">資料集 → 雙人對談式
+                Podcast，用聽的把一份市場報告學完。通勤 20 分鐘 = 讀完 50 頁。</div>
+            </div>
+          </div>
+          <div class="card glass" style="display:flex;gap:16px;align-items:flex-start;padding:20px 22px;">
+            <div style="font-size:32px;flex-shrink:0;">🗺️</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;color:#00e5a0;margin-bottom:6px;">心智圖與摘要卡片</div>
+              <div style="font-size:16px;color:rgba(255,255,255,.5);line-height:1.6;">複雜文件 → 自動生成心智圖結構，或拆解成卡片式重點，直覺掌握全貌。
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: screenshot -->
+        <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
+          <div
+            style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px;">
+            實際畫面 · In action</div>
+          <div
+            style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 24px rgba(0,0,0,.4);">
+            <img src="Notebooklm%20%E4%B8%80%E8%87%B4%E9%A2%A8%E6%A0%BC.png"
+              style="width:100%;display:block;">
+          </div>
+          <div
+            style="padding:12px 16px;border-radius:10px;background:rgba(255,208,96,.07);border:1px solid rgba(255,208,96,.18);font-size:15px;color:rgba(255,255,255,.55);">
+            💡 Felix 使用中：同一份法規文件 → 生成簡報 + Podcast + 摘要卡片，三種格式同步交付給不同受眾。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 22 · NOTEBOOKLM ═══ -->
+    <div class="slide" id="s24">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Part 3 · NotebookLM</div>
+        <div class="h1" style="margin-bottom:8px;">幫你的資料建一個專屬 AI<span class="en" style="font-size:22px;">Your own AI
+            that only knows what you feed it</span></div>
+        <div class="sub">不是普通的 AI，是「只讀你給它的資料」的閉源知識庫。</div>
+      </div>
+      <div class="col2" style="margin-top:4px;align-items:stretch;">
+        <div class="card glass" style="padding:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+            <div class="icon-box" style="background:rgba(124,111,255,.15);">🩹</div>
+            <div style="font-size:20px;font-weight:700;">SIPSIP 文獻知識庫<span class="en" style="font-size:14px;">Research
+                knowledge base</span></div>
+          </div>
+          <div style="font-size:17px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:18px;">上傳 50 篇傷口敷料論文 PDF
+            → 直接問「水膠體 vs 泡棉吸收力比較」→ AI 即時答覆，每句話可點回原文段落。</div>
+          <div style="display:flex;gap:14px;">
+            <div
+              style="flex:1;text-align:center;padding:14px;border-radius:12px;background:rgba(255,100,80,.08);border:1px solid rgba(255,100,80,.15);">
+              <div style="font-size:26px;font-weight:800;" class="grad-w">3 天</div>
+              <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">人工讀完 + 整理</div>
+            </div>
+            <div style="display:flex;align-items:center;font-size:24px;color:rgba(255,255,255,.25);">→</div>
+            <div
+              style="flex:1;text-align:center;padding:14px;border-radius:12px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.2);">
+              <div style="font-size:26px;font-weight:800;" class="grad-g">30 分</div>
+              <div style="font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;">提問即時答覆+引用</div>
+            </div>
+          </div>
+        </div>
+        <div class="card glass" style="padding:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+            <div class="icon-box" style="background:rgba(0,212,232,.15);">💼</div>
+            <div style="font-size:20px;font-weight:700;">客戶歷史資料庫<span class="en" style="font-size:14px;">Client history
+                base</span></div>
+          </div>
+          <div style="font-size:17px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:14px;">三年 Email
+            摘要、報價單、合約全丟進去。新業務問：「上次催收花多久？誰決定的？」秒回。</div>
+          <div style="font-size:15px;color:rgba(255,255,255,.35);margin-bottom:10px;">你可以問它：</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div
+              style="font-size:16px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);">
+              「他們最在意的三件事是什麼？」</div>
+            <div
+              style="font-size:16px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);">
+              「合約 NDA 有沒有禁止接觸競品 X？」</div>
+            <div
+              style="font-size:16px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);">
+              「新業務上手需要知道哪些眉角？」</div>
+          </div>
+          <div style="margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="my%20notebooklm.png" style="width:100%;display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 23 · GEM ═══ -->
+    <div class="slide" id="s25">
+      <div style="width:100%;max-width:1040px;display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <div class="tag">Part 4 · Gem</div>
+          <div class="h1" style="margin-bottom:4px;">每次都重打同樣的 Prompt？打一次就好<span class="en" style="font-size:20px;">Stop
+              re-typing. Build a Gem once, use it forever.</span></div>
+          <div class="sub">把你最常用的工作流，封裝成一個可以分享給同事的 AI 分身。</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+          <!-- Left: compare + steps -->
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div
+                style="padding:12px;border-radius:12px;background:rgba(255,100,80,.07);border:1px solid rgba(255,100,80,.15);">
+                <div style="font-size:15px;font-weight:700;color:#ff7060;margin-bottom:8px;">❌ 一般對話</div>
+                <div style="font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;">每次重打背景<br>知識檔每次重貼<br>離開就忘</div>
+              </div>
+              <div
+                style="padding:12px;border-radius:12px;background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.2);">
+                <div style="font-size:15px;font-weight:700;color:#00e5a0;margin-bottom:8px;">✅ Gem</div>
+                <div style="font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;">背景永遠帶著<br>知識檔預載好<br>全公司品質一致
+                </div>
+              </div>
+            </div>
+            <div class="card glass" style="padding:16px;">
+              <div style="font-size:14px;color:rgba(255,255,255,.4);margin-bottom:8px;">15 分鐘建你的第一個 Gem</div>
+              <div style="display:flex;flex-direction:column;gap:7px;">
+                <div style="display:flex;gap:10px;align-items:center;font-size:15px;"><span
+                    style="width:22px;height:22px;border-radius:6px;background:rgba(0,212,232,.2);color:#00d4e8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">1</span>Gemini
+                  左欄 → Gems → + New Gem</div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:15px;"><span
+                    style="width:22px;height:22px;border-radius:6px;background:rgba(124,111,255,.2);color:#a89fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">2</span>命名：部門_用途_版本（SIPSIP_Sales_v1）
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:15px;"><span
+                    style="width:22px;height:22px;border-radius:6px;background:rgba(232,112,192,.2);color:#e870c0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">3</span>撰寫指令（五件套）+
+                  上傳知識檔</div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:15px;"><span
+                    style="width:22px;height:22px;border-radius:6px;background:rgba(0,229,160,.2);color:#00e5a0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">4</span>右側預覽測試，改三輪才算合格
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:15px;"><span
+                    style="width:22px;height:22px;border-radius:6px;background:rgba(255,208,96,.2);color:#ffd060;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">5</span>Share
+                  給同事 → 等於少開一場教育訓練</div>
+              </div>
+            </div>
+          </div>
+          <!-- Right: My Gem screenshot — full, no crop -->
+          <div
+            style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 4px 24px rgba(0,0,0,.4);">
+            <img src="My%20Gem.png" style="width:100%;height:auto;display:block;">
+          </div>
+        </div>
+        <!-- Bottom: 3 Gem examples horizontal -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div class="card glass" style="padding:16px;border-left:3px solid #00e5a0;">
+            <div style="font-size:16px;font-weight:700;margin-bottom:6px;">🌿 SIPSIP Sales Companion</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.48);line-height:1.6;">丟一個代理商網站 → 30 秒出公司介紹、三個切入點、150
+              字英文開信。</div>
+          </div>
+          <div class="card glass" style="padding:16px;border-left:3px solid #e870c0;">
+            <div style="font-size:16px;font-weight:700;margin-bottom:6px;">✨ Lumière Copywriter</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.48);line-height:1.6;">品牌語調預設好，IG 文 / EDM /
+              產品頁，一次出三個版本任你選。</div>
+          </div>
+          <div class="card glass" style="padding:16px;border-left:3px solid #ffd060;">
+            <div style="font-size:16px;font-weight:700;margin-bottom:6px;">📩 客訴情緒分級助理</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.48);line-height:1.6;">客訴信丟進去 → 情緒分級（綠/黃/紅）+ 回覆草稿 +
+              內部處置建議，30 秒搞定。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 24 · SECTION: CLAUDE ═══ -->
+    <div class="slide" id="s26">
+      <div class="sec-wrap">
+        <div class="sec-num">06</div>
+        <div class="sec-title"><span class="grad">Claude</span></div>
+        <div style="font-size:16px;color:rgba(255,255,255,.35);margin-top:8px;font-style:italic;">Part 6 of 6 · Felix's
+          personal toolkit</div>
+        <div class="sec-sub">這段不是要你馬上改用 Claude。<br>是讓你看見 AI 真正跑起來後，可以做到哪些事。<br><em style="font-size:16px;">Not asking
+            you to switch — just showing you what's possible.</em></div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 25 · CLAUDE ENTRY POINTS ═══ -->
+    <div class="slide" id="s27">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Claude · 三大入口</div>
+        <div class="h1" style="margin-bottom:8px;">同一個 Claude，三種方式用<span class="en" style="font-size:22px;">One Claude,
+            three ways to work with it</span></div>
+        <div class="sub">場景不同、適合的人不同——核心都是把 AI 真正裝進工作流。</div>
+      </div>
+      <div class="col3" style="margin-top:4px;">
+        <div class="card glass" style="padding:30px 24px;border-top:3px solid #00d4e8;">
+          <div style="font-size:36px;margin-bottom:14px;">🖥️</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:6px;">Claude Cowork<span class="en">Desktop
+              assistant</span></div>
+          <div class="badge badge-c" style="margin-bottom:14px;">非工程師首選</div>
+          <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.7;">裝在電腦上的 Claude，能讀寫指定資料夾、串接 Slack /
+            Notion / Shopify，用 Skills 把重複工作模組化。</div>
+          <div style="margin-top:12px;font-size:15px;color:rgba(255,255,255,.3);font-style:italic;">PM、行銷、業務、法規 —
+            這就是你的工具</div>
+        </div>
+        <div class="card glass" style="padding:30px 24px;border-top:3px solid #7c6fff;">
+          <div style="font-size:36px;margin-bottom:14px;">🤖</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:6px;">Claude Dispatch<span class="en">Automated
+              teammate</span></div>
+          <div class="badge badge-p" style="margin-bottom:14px;">定時 / 觸發式任務</div>
+          <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.7;">每天 8:00
+            自動跑日報、每週一出週報、新信件觸發分析——你不用動，它自己跑。</div>
+          <div style="margin-top:12px;font-size:15px;color:rgba(255,255,255,.3);font-style:italic;">Felix 的 8
+            個自動化全靠這個串起來</div>
+        </div>
+        <div class="card glass" style="padding:30px 24px;border-top:3px solid #e870c0;">
+          <div style="font-size:36px;margin-bottom:14px;">💻</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:6px;">Claude Code CLI<span class="en">Engineering
+              assistant</span></div>
+          <div class="badge badge-m" style="margin-bottom:14px;">IT / MIS 專用</div>
+          <div style="font-size:17px;color:rgba(255,255,255,.5);line-height:1.7;">在終端機直接改 n8n 工作流、寫 AppScript、操作 Vercel
+            部署、做大型 refactor。</div>
+          <div style="margin-top:12px;font-size:15px;color:rgba(255,255,255,.3);font-style:italic;">非工程師可以跳過——但歡迎開眼界
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 26 · FELIX CASES OVERVIEW ═══ -->
+    <div class="slide" id="s28">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">Claude · Felix 實際落地的 8 個自動化</div>
+        <div class="h1" style="margin-bottom:8px;">這些不是 demo，是每天都在跑的東西<span class="en" style="font-size:22px;">Not demos
+            — these run every single day</span></div>
+        <div class="sub">其中 4 個，你今天就能用 Gemini + Workspace 複製 80%。</div>
+      </div>
+      <div
+        style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:1000px;margin-top:8px;">
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">📋</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">每日工作日報<span class="en"
+              style="font-size:12px;">Daily work log</span></div>
+          <div class="badge badge-p" style="font-size:12px;">Dispatch</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">📧</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">每日重點摘要信<span class="en"
+              style="font-size:12px;">Daily briefing email</span></div>
+          <div class="badge badge-c" style="font-size:12px;">Dispatch + Gmail</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">🔍</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">競品與輿論分析<span class="en"
+              style="font-size:12px;">Competitor monitor</span></div>
+          <div class="badge badge-w" style="font-size:12px;">n8n + Line</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">📊</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">每週週報彙整<span class="en"
+              style="font-size:12px;">Weekly report</span></div>
+          <div class="badge badge-p" style="font-size:12px;">Dispatch</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">📈</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">每月月報彙整<span class="en"
+              style="font-size:12px;">Monthly report</span></div>
+          <div class="badge badge-g" style="font-size:12px;">Cowork + Sheets</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">🎙️</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">語音轉會議紀錄<span class="en"
+              style="font-size:12px;">Voice → meeting notes</span></div>
+          <div class="badge badge-c" style="font-size:12px;">Cowork</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">🖥️</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">Cowork 複合任務<span class="en"
+              style="font-size:12px;">Multi-file automation</span></div>
+          <div class="badge badge-g" style="font-size:12px;">Cowork</div>
+        </div>
+        <div class="card glass" style="padding:18px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:10px;">💻</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">CLI 工程自動化<span class="en"
+              style="font-size:12px;">Terminal automation</span></div>
+          <div class="badge badge-m" style="font-size:12px;">Claude Code CLI</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══ SLIDE 27 · CASES 1-2 ═══ -->
+    <div class="slide" id="s29">
+      <div style="width:100%;max-width:1000px;margin-bottom:16px;">
+        <div class="tag">Felix 實作 · Cases 01–02</div>
+        <div class="h2">每天早上，AI 幫我備好這些<span class="en" style="font-size:18px;">What Claude preps for me every
+            morning</span></div>
+      </div>
+      <div class="case-grid">
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 01</div>
+              <div class="case-title">每日工作日報<span class="en" style="font-size:14px;">Daily Work Log</span></div>
+            </div>
+            <div class="badge badge-p">每日 06:30</div>
+          </div>
+          <div class="case-desc">整合前日跨系統工作紀錄（Slack、Email、Asana），自動產出個人工作彙報。<br><em style="font-size:13px;">Aggregates
+              daily activity into a structured work log.</em></div>
+          <div class="case-tools"><span class="badge badge-p">Dispatch</span><span class="badge badge-c">n8n</span>
+          </div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="%E6%99%A8%E9%96%93%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%A0%B1.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;">
+          </div>
+        </div>
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 02</div>
+              <div class="case-title">每日重點摘要信<span class="en" style="font-size:14px;">Daily Briefing Email</span></div>
+            </div>
+            <div class="badge badge-c">每日 06:30</div>
+          </div>
+          <div class="case-desc">掃描前一天重要信件、通知、行事曆，早上開機前信箱已有今日重點摘要。<br><em style="font-size:13px;">Wake up to a digest of
+              what matters today.</em></div>
+          <div class="case-tools"><span class="badge badge-p">Dispatch</span><span class="badge badge-c">Gmail
+              MCP</span></div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="n8n%20%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 27b · CASES 3-4 ═══ -->
+    <div class="slide" id="s30">
+      <div style="width:100%;max-width:1000px;margin-bottom:16px;">
+        <div class="tag">Felix 實作 · Cases 03–04</div>
+        <div class="h2">每天早上，AI 幫我備好這些<span class="en" style="font-size:18px;">What Claude preps for me every
+            morning</span></div>
+      </div>
+      <div class="case-grid">
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 03</div>
+              <div class="case-title">競品與輿論分析<span class="en" style="font-size:14px;">Competitor Monitor</span></div>
+            </div>
+            <div class="badge badge-w">每日 06:30</div>
+          </div>
+          <div class="case-desc">自動抓取競品新聞、產業輿論、關鍵字變化，分析後推播到 Line，每天 5 分鐘掌握市場。<br><em style="font-size:13px;">Market
+              pulse delivered to Line, every morning.</em></div>
+          <div class="case-tools"><span class="badge badge-w">n8n</span><span class="badge badge-p">Claude</span><span
+              class="badge badge-w">Line Notify</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+              <img src="%E6%AF%8F%E6%97%A5%E5%B8%82%E5%A0%B4%E6%83%85%E5%A0%B1.png"
+                style="width:100%;display:block;height:160px;object-fit:cover;">
+            </div>
+            <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+              <img
+                src="LINE%20%E7%94%9F%E6%8A%80%E6%96%B0%E8%81%9E%E6%91%98%E8%A6%81%E6%97%A5%E5%A0%B1.jpg"
+                style="width:100%;display:block;height:160px;object-fit:cover;object-position:center top;">
+            </div>
+          </div>
+        </div>
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 04</div>
+              <div class="case-title">每週週報彙整<span class="en" style="font-size:14px;">Weekly Report</span></div>
+            </div>
+            <div class="badge badge-c">每週四 12:00</div>
+          </div>
+          <div class="case-desc">彙整全部門一週進度、決策、待辦，自動產出主管週報格式，10 分鐘審核完就能發出。<br><em style="font-size:13px;">Full-team
+              weekly summary, ready to review in 10 min.</em></div>
+          <div class="case-tools"><span class="badge badge-p">Dispatch</span><span class="badge badge-g">Cowork</span>
+          </div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="ss-weekly%20report.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══ SLIDE 28 · CASES 5-6 ═══ -->
+    <div class="slide" id="s31">
+      <div style="width:100%;max-width:1000px;margin-bottom:16px;">
+        <div class="tag">Felix 實作 · Cases 05–06</div>
+        <div class="h2">這些以前要花幾小時，現在自動完成<span class="en" style="font-size:18px;">Used to take hours. Now it just
+            happens.</span></div>
+      </div>
+      <div class="case-grid">
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 05</div>
+              <div class="case-title">每月月報彙整<span class="en" style="font-size:14px;">Monthly Report</span></div>
+            </div>
+            <div class="badge badge-g">每月 1 日</div>
+          </div>
+          <div class="case-desc">跨產品線數據整合（SeepPlug / Lumière / SIPSIP），Cowork 讀取 Sheets 自動出月報初稿。<br><em
+              style="font-size:13px;">Three product lines, one consolidated monthly draft.</em></div>
+          <div class="case-tools"><span class="badge badge-g">Cowork</span><span class="badge badge-g">Google
+              Sheets</span></div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="Line%20n8n%20%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81-2.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top;">
+          </div>
+        </div>
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 06</div>
+              <div class="case-title">語音轉會議紀錄<span class="en" style="font-size:14px;">Voice → Meeting Notes</span></div>
+            </div>
+            <div class="badge badge-c">會後即時</div>
+          </div>
+          <div class="case-desc">會議錄音或逐字稿丟給 Cowork，自動整理成決議、Action Items、負責人，並同步到指定資料夾。<br><em
+              style="font-size:13px;">Audio in → structured meeting notes out, instantly.</em></div>
+          <div class="case-tools"><span class="badge badge-g">Cowork</span><span class="badge badge-c">Google
+              Meet</span></div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="voice-meeting%20minute.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 28b · CASES 7-8 ═══ -->
+    <div class="slide" id="s32">
+      <div style="width:100%;max-width:1000px;margin-bottom:16px;">
+        <div class="tag">Felix 實作 · Cases 07–08</div>
+        <div class="h2">這些以前要花幾小時，現在自動完成<span class="en" style="font-size:18px;">Used to take hours. Now it just
+            happens.</span></div>
+      </div>
+      <div class="case-grid">
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 07</div>
+              <div class="case-title">Cowork 複合任務<span class="en" style="font-size:14px;">Multi-file Automation</span>
+              </div>
+            </div>
+            <div class="badge badge-g">按需執行</div>
+          </div>
+          <div class="case-desc">同時讀取多份報表、跨資料夾整合、用 Skills 模組化，一個指令跑完以前需要半天的整理工作。<br><em
+              style="font-size:13px;">Multi-file tasks done in minutes, not half a day.</em></div>
+          <div class="case-tools"><span class="badge badge-g">Cowork</span><span class="badge badge-c">MCP +
+              Skills</span></div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="Line%20n8n%20%E6%AF%8F%E6%97%A5%E6%96%B0%E8%81%9E%E6%91%98%E8%A6%81.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top;">
+          </div>
+        </div>
+        <div class="case-card glass">
+          <div class="case-top">
+            <div>
+              <div class="case-num">CASE 08</div>
+              <div class="case-title">CLI 工程自動化<span class="en" style="font-size:14px;">Terminal Automation</span></div>
+            </div>
+            <div class="badge badge-m">IT 使用</div>
+          </div>
+          <div class="case-desc">在終端機直接修改 n8n 工作流 JSON、寫 AppScript、更新 Vercel 設定——工程師說話的語言，Claude 聽得懂。<br><em
+              style="font-size:13px;">Talk to your codebase in plain English.</em></div>
+          <div class="case-tools"><span class="badge badge-m">Claude Code CLI</span><span
+              class="badge badge-w">n8n</span><span class="badge badge-c">Vercel</span></div>
+          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="Claude%20code%20CLI.png"
+              style="width:100%;display:block;max-height:220px;object-fit:cover;object-position:top;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 29 · PATTERNS ═══ -->
+    <div class="slide" id="s33">
+      <div style="width:100%;max-width:1000px;">
+        <div class="tag">模式提取 · Reusable Patterns</div>
+        <div class="h1" style="margin-bottom:8px;">不要記案例，記這三個模式<span class="en" style="font-size:22px;">Don't memorize
+            cases — internalize these 3 patterns</span></div>
+        <div class="sub">把你的工作對號入座，你就知道怎麼跟 AI 合作。</div>
+      </div>
+      <div class="col3" style="margin-top:4px;">
+        <div class="card glass" style="padding:28px;border-top:3px solid #00d4e8;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;color:#00d4e8;margin-bottom:14px;">P1 · MONITOR
+          </div>
+          <div style="font-size:22px;font-weight:700;margin-bottom:8px;">定時抓 + 摘要 + 推送<span class="en">Schedule →
+              Summarize → Push</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.48);line-height:1.65;margin-bottom:14px;">外部資訊 → AI 摘要 →
+            推到指定管道<br>對應案例：#03 競品分析、#02 日報信件</div>
+          <div
+            style="padding:12px 16px;border-radius:10px;background:rgba(0,212,232,.07);font-size:15px;color:rgba(255,255,255,.5);">
+            Gemini 替代：Deep Research + 手動 Email</div>
+        </div>
+        <div class="card glass" style="padding:28px;border-top:3px solid #7c6fff;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;color:#a89fff;margin-bottom:14px;">P2 ·
+            AGGREGATE</div>
+          <div style="font-size:22px;font-weight:700;margin-bottom:8px;">多源合併 + 結構化<span class="en">Merge → Structure →
+              Output</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.48);line-height:1.65;margin-bottom:14px;">多個來源 → AI 整合 →
+            統一格式輸出<br>對應案例：#04 週報、#05 月報</div>
+          <div
+            style="padding:12px 16px;border-radius:10px;background:rgba(124,111,255,.07);font-size:15px;color:rgba(255,255,255,.5);">
+            Gemini 替代：AppSheet + Help me organize</div>
+        </div>
+        <div class="card glass" style="padding:28px;border-top:3px solid #e870c0;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.1em;color:#e870c0;margin-bottom:14px;">P3 ·
+            GENERATE</div>
+          <div style="font-size:22px;font-weight:700;margin-bottom:8px;">事件觸發 → 自動成稿<span class="en">Event → Decide →
+              Draft</span></div>
+          <div style="font-size:17px;color:rgba(255,255,255,.48);line-height:1.65;margin-bottom:14px;">工作事件 → AI 判斷 →
+            產出書面成品<br>對應案例：#01 日報、#06 會議紀錄</div>
+          <div
+            style="padding:12px 16px;border-radius:10px;background:rgba(232,112,192,.07);font-size:15px;color:rgba(255,255,255,.5);">
+            Gemini 替代：Docs Help me write + Sheets</div>
+        </div>
+      </div>
+      <div
+        style="margin-top:20px;max-width:1000px;width:100%;text-align:center;font-size:18px;color:rgba(255,255,255,.4);">
+        8 個案例裡 4 個，<span style="color:#00d4e8;font-weight:700;">今天用 Gemini + Workspace 就能複製 80%</span>。<br>
+        <em style="font-size:16px;">4 of 8 cases can be 80% replicated with Gemini + Workspace today.</em>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 30 · 30/60/90 DAY PLAN ═══ -->
+    <div class="slide" id="s34">
+      <div style="width:100%;max-width:1000px;text-align:center;margin-bottom:24px;">
+        <div class="tag">行動計畫 · Action Plan</div>
+        <div class="h1">30 天後，你就不一樣了<span class="en" style="font-size:22px;">30 days from now, you'll be a different
+            person</span></div>
+      </div>
+      <div class="timeline">
+        <div class="tl-card glass" style="border-top:3px solid #00d4e8;">
+          <div class="tl-day" style="color:#00d4e8;">30 天 · Day 30</div>
+          <div style="font-size:15px;color:rgba(255,255,255,.38);margin-bottom:16px;font-style:italic;">Build the habit
+          </div>
+          <div class="tl-items">
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#00d4e8;"></div>
+              </div>
+              <div>每天用五件套寫一個 Prompt，哪怕只有一句<br><em style="font-size:13px;">One structured prompt a day</em></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#00d4e8;"></div>
+              </div>
+              <div>選一個公司共用 Gem 開始用，不要重新打 Prompt<br><em style="font-size:13px;">Use one shared Gem — stop retyping</em>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#00d4e8;"></div>
+              </div>
+              <div>上傳一份你常看的 PDF 到 NotebookLM<br><em style="font-size:13px;">Upload one doc to NotebookLM and ask it
+                  stuff</em></div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-card glass" style="border-top:3px solid #7c6fff;">
+          <div class="tl-day" style="color:#a89fff;">60 天 · Day 60</div>
+          <div style="font-size:15px;color:rgba(255,255,255,.38);margin-bottom:16px;font-style:italic;">Build your own
+            tool</div>
+          <div class="tl-items">
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#7c6fff;"></div>
+              </div>
+              <div>找出你最常重複的一個工作流，建成 Gem<br><em style="font-size:13px;">Identify your most repetitive task — Gem it</em>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#7c6fff;"></div>
+              </div>
+              <div>上傳你工作會用到的知識檔，測試品質<br><em style="font-size:13px;">Load your knowledge files and test output
+                  quality</em></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#7c6fff;"></div>
+              </div>
+              <div>分享給一個同事，收一輪回饋<br><em style="font-size:13px;">Share with a colleague — get feedback</em></div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-card glass" style="border-top:3px solid #e870c0;">
+          <div class="tl-day" style="color:#e870c0;">90 天 · Day 90</div>
+          <div style="font-size:15px;color:rgba(255,255,255,.38);margin-bottom:16px;font-style:italic;">Propose
+            something bigger</div>
+          <div class="tl-items">
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#e870c0;"></div>
+              </div>
+              <div>找一個跨部門痛點，你覺得 AI 可以解的那種<br><em style="font-size:13px;">Spot a cross-team pain point AI can solve</em>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#e870c0;"></div>
+              </div>
+              <div>畫流程圖，估每個月省幾個小時<br><em style="font-size:13px;">Map the flow, estimate hours saved per month</em></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot-inner" style="background:#e870c0;"></div>
+              </div>
+              <div>向 Felix 提案，我們一起討論落地路徑<br><em style="font-size:13px;">Pitch to Felix — let's build it together</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 31 · CLOSING ═══ -->
+    <div class="slide" id="s35">
+      <div
+        style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,232,.07) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none;z-index:0;">
+      </div>
+      <div style="text-align:center;max-width:760px;">
+        <div style="font-size:64px;margin-bottom:24px;">🙌</div>
+        <div class="h1" style="margin-bottom:16px;">AI，<span class="grad">讓我們蛻變</span></div>
+        <div style="font-size:22px;color:rgba(255,255,255,.42);font-style:italic;margin-bottom:44px;">Tools get
+          replaced. People who know how to use them don't.</div>
+        <div style="display:flex;flex-direction:column;gap:14px;align-items:center;">
+          <div
+            style="padding:16px 32px;border-radius:14px;background:rgba(0,212,232,.1);border:1px solid rgba(0,212,232,.25);font-size:18px;color:rgba(255,255,255,.75);max-width:560px;">
+            今天就試一件事：打開 Gemini，把一份你常看的 PDF 丟進去，問它三個問題。
+          </div>
+          <div style="font-size:16px;color:rgba(255,255,255,.3);font-style:italic;">Today's action: open Gemini, upload
+            one doc, ask it 3 questions.</div>
+          <div style="margin-top:14px;display:flex;gap:24px;font-size:15px;color:rgba(255,255,255,.3);">
+            <span>Felix Tsai · Chief Business Officer</span>
+            <span style="opacity:.4;">·</span>
+            <span>AMS BioteQ 元樟生技</span>
+            <span style="opacity:.4;">·</span>
+            <span>May 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /deck -->
+
+  <!-- Nav dots -->
+  <div class="nav-wrap" id="nav"></div>
+  <div class="hint">← → Space</div>
+
+  <script>
+    const TOTAL = 35;
+    const slides = document.querySelectorAll('.slide');
+    const prog = document.getElementById('prog');
+    const ctr = document.getElementById('ctr');
+    const nav = document.getElementById('nav');
+    let cur = 0;
+
+    // Build dots
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' on' : '');
+      d.onclick = () => go(i);
+      nav.appendChild(d);
+    }
+
+    function go(n) {
+      if (n === cur || n < 0 || n >= TOTAL) return;
+      slides[cur].classList.remove('active');
+      slides[cur].classList.add('exit');
+      const prev = cur;
+      cur = n;
+      setTimeout(() => slides[prev].classList.remove('exit'), 450);
+      slides[cur].classList.add('active');
+      document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+      prog.style.width = ((cur + 1) / TOTAL * 100) + '%';
+      ctr.textContent = (cur + 1) + ' / ' + TOTAL;
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(cur - 1); }
+    });
+
+    document.getElementById('deck').addEventListener('click', e => {
+      const x = e.clientX;
+      if (x > window.innerWidth / 2) go(cur + 1);
+      else go(cur - 1);
+    });
+
+    // Init progress
+    prog.style.width = (1 / TOTAL * 100) + '%';
+  </script>
+</body>
+
+</html>
